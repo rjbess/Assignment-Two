@@ -1,0 +1,50 @@
+# depslib dependency file v1.0
+1555306123 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\date.cpp
+	"DATE.H"
+
+1555306744 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\date.h
+
+1558914296 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\main.cpp
+	"Menu.H"
+	"WINDLOGTYPE.H"
+	<map>
+	"BinarySearchTree.h"
+
+1558914020 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\menu.h
+	<iostream>
+	<iomanip>
+	"string"
+	"IOHelpers.H"
+	"BinarySearchTree.h"
+
+1558916923 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\iohelpers.h
+	"OperatorOverloads.H"
+	<cmath>
+	<string>
+	<fstream>
+	<map>
+	<vector>
+	<algorithm>
+	"chrono"
+
+1558909622 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\operatoroverloads.h
+	<string>
+	<iostream>
+	<iomanip>
+	"DATE.H"
+	"TIME.H"
+	"WINDLOGTYPE.H"
+	"BinarySearchTree.h"
+	<map>
+
+1555306798 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\time.h
+
+1558652250 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\windlogtype.h
+	"DATE.H"
+	"TIME.H"
+
+1558674768 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\binarysearchtree.h
+
+1555306123 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\time.cpp
+	"TIME.H"
+
