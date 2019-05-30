@@ -14,11 +14,12 @@
 #include "TIME.H"
 #include "WINDLOGTYPE.H"
 #include "BinarySearchTree.h"
+#include "monthTotalStruct.h"
 #include <map>
 
 //---------------------------------------------------------------------------------
 
-void ConvertKey(std::string &inStringKey, WindLogType &tempStruct)
+void ConvertKey( std::string &inStringKey,const WindLogType &tempStruct)
 {
     inStringKey= std::to_string(tempStruct.d.GetYear());
 
@@ -55,7 +56,7 @@ void ConvertKey(std::string &inStringKey, WindLogType &tempStruct)
          inStringKey+=std::to_string(tempStruct.t.GetMinutes());
     }
 }
-std::istream & operator >>( std::istream & input,Date & D )
+std::istream & operator >>(  std::istream & input, Date & D )
 {
   std::string inString;
 
@@ -70,7 +71,7 @@ std::istream & operator >>( std::istream & input,Date & D )
 
   return input;
 }
-std::istream & operator >>( std::istream & input,Time & T )
+std::istream & operator >>( std::istream & input, Time & T )
 {
   std::string inString;
   getline(input, inString, ':');
@@ -81,7 +82,7 @@ std::istream & operator >>( std::istream & input,Time & T )
 
   return input;
 }
-std::istream & operator >>( std::istream & input, std::map<std::string, WindLogType> & W)
+std::istream & operator >>(std::istream & input, std::map<std::string, WindLogType> & W)
 {
     std::string inString=" ";
     input.ignore(1000, '\n');
@@ -151,108 +152,9 @@ std::ostream & operator <<(  std::ostream & output, const Time & outTime)
     output<<outTime.GetHours()<<':'<<outTime.GetMinutes();
     return output;
 }
-std::ostream & operator <<(  std::ostream & output, WindLogType & inWindLog)
+bool operator<(const monthTotalStruct& lhs, const monthTotalStruct& rhs)
 {
-    output<<inWindLog.d<<'\n'<<inWindLog.t<<'\n'<<inWindLog.airTemp<<'\n'<<inWindLog.speed<<'\n'<<inWindLog.solarRadiation<<'\n';
-    return output;
-}
-bool operator<(const WindLogType& lhs, const WindLogType& rhs)
-{
-    if(lhs.d.GetYear()<rhs.d.GetYear())
-    {
-        return true;
-    }
-    else if( lhs.d.GetYear()>rhs.d.GetYear())
-    {
-        return false;
-    }
-    else if(lhs.d.GetMonth()<rhs.d.GetMonth())
-    {
-        return true;
-    }
-    else if(lhs.d.GetMonth()>rhs.d.GetMonth())
-    {
-        return false;
-    }
-    else if(lhs.d.GetDay()<rhs.d.GetDay())
-    {
-        return true;
-    }
-    else if(lhs.d.GetDay()>rhs.d.GetDay())
-    {
-        return false;
-    }
-    else if(lhs.t.GetHours()<rhs.t.GetHours())
-    {
-        return true;
-    }
-    else if(lhs.t.GetHours()>rhs.t.GetHours())
-    {
-        return false;
-    }
-    else if(lhs.t.GetMinutes()<rhs.t.GetMinutes())
-    {
-        return true;
-    }
-    else if(lhs.t.GetMinutes()>rhs.t.GetMinutes())
-    {
-        return false;
-    }
-    else
-    {
-        return false;
-    }
-}
-bool operator>(const WindLogType& lhs, const WindLogType& rhs)
-{
-    if(lhs.d.GetYear()>rhs.d.GetYear())
-    {
-        return true;
-    }
-    else if( lhs.d.GetYear()<rhs.d.GetYear())
-    {
-        return false;
-    }
-    else if(lhs.d.GetMonth()>rhs.d.GetMonth())
-    {
-        return true;
-    }
-    else if(lhs.d.GetMonth()<rhs.d.GetMonth())
-    {
-        return false;
-    }
-    else if(lhs.d.GetDay()>rhs.d.GetDay())
-    {
-        return true;
-    }
-    else if(lhs.d.GetDay()<rhs.d.GetDay())
-    {
-        return false;
-    }
-    else if(lhs.t.GetHours()>rhs.t.GetHours())
-    {
-        return true;
-    }
-    else if(lhs.t.GetHours()<rhs.t.GetHours())
-    {
-        return false;
-    }
-    else if(lhs.t.GetMinutes()>rhs.t.GetMinutes())
-    {
-        return true;
-    }
-    else if(lhs.t.GetMinutes()<rhs.t.GetMinutes())
-    {
-        return false;
-    }
-    else
-    {
-        return false;
-    }
-}
-bool operator<(const std::pair<std::string, std::map<std::string, WindLogType>::iterator> &lhs,const std::pair<std::string, std::map<std::string, WindLogType>::iterator> &rhs )
-{
-    if(lhs.first<rhs.first)
+    if(lhs.key<rhs.key)
     {
         return true;
     }
@@ -261,9 +163,20 @@ bool operator<(const std::pair<std::string, std::map<std::string, WindLogType>::
         return false;
     }
 }
-bool operator>(const std::pair<std::string, std::map<std::string, WindLogType>::iterator> &lhs,const std::pair<std::string, std::map<std::string, WindLogType>::iterator> &rhs )
+bool operator>(const monthTotalStruct& lhs, const monthTotalStruct& rhs)
 {
-    if(lhs.first>rhs.first)
+    if(lhs.key>rhs.key)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool operator==( monthTotalStruct &lhs, monthTotalStruct &rhs)
+{
+    if(lhs.key==rhs.key)
     {
         return true;
     }

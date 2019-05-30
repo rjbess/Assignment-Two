@@ -7,7 +7,8 @@
 
 //---------------------------------------------------------------------------------
 template<typename T>
-using flTyp= void (*)(T &);
+using flTyp= void (*)( T &);
+
 
     /**
 	 * @class BST
@@ -260,7 +261,7 @@ class BST
              * @param inData- T data value to be searched.
              * @return void
              */
-        void Search(const T inData);
+        T Search(T inData);
             /**
              * @brief  Calls the private In Order Traversal method
              *
@@ -470,18 +471,12 @@ void BST<T>::Remove(node* &inRootNode, const T inData)
     }
 }
 template <typename T>
-void BST<T>::Search(const T inData)
+T BST<T>::Search(const T inData)
 {
     node* tempNode=nullptr;
     tempNode= Search(rootNode, inData);
-    if(tempNode==nullptr)
-    {
-        std::cout<<"Input not found";
-    }
-    else
-    {
-        std::cout<<"Element found at: "<<tempNode;
-    }
+
+    return tempNode->data;
 }
 template <typename T>
 typename BST<T>::node* BST<T>::Search(node *inNode, T inData)const

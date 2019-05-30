@@ -1,24 +1,25 @@
 # depslib dependency file v1.0
-1555306123 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\date.cpp
+1559013015 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\date.cpp
 	"DATE.H"
 
-1555306744 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\date.h
+1559013015 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\date.h
 
-1558914296 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\main.cpp
+1559212061 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\main.cpp
 	"Menu.H"
 	"WINDLOGTYPE.H"
 	<map>
 	"BinarySearchTree.h"
 
-1558914020 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\menu.h
+1559208772 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\menu.h
 	<iostream>
 	<iomanip>
 	"string"
 	"IOHelpers.H"
 	"BinarySearchTree.h"
 
-1558916923 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\iohelpers.h
+1559213585 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\iohelpers.h
 	"OperatorOverloads.H"
+	"monthTotalStruct.h"
 	<cmath>
 	<string>
 	<fstream>
@@ -27,7 +28,7 @@
 	<algorithm>
 	"chrono"
 
-1558909622 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\operatoroverloads.h
+1559208540 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\operatoroverloads.h
 	<string>
 	<iostream>
 	<iomanip>
@@ -35,16 +36,74 @@
 	"TIME.H"
 	"WINDLOGTYPE.H"
 	"BinarySearchTree.h"
+	"monthTotalStruct.h"
 	<map>
 
-1555306798 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\time.h
+1559013015 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\time.h
 
-1558652250 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\windlogtype.h
+1559206979 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\windlogtype.h
 	"DATE.H"
 	"TIME.H"
 
-1558674768 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\binarysearchtree.h
+1559212113 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\binarysearchtree.h
 
-1555306123 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\time.cpp
+1559013015 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\time.cpp
 	"TIME.H"
+
+1559013015 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\date.cpp
+	"DATE.H"
+
+1559013015 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\date.h
+
+1559212061 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\main.cpp
+	"Menu.H"
+	"WINDLOGTYPE.H"
+	<map>
+	"BinarySearchTree.h"
+
+1559208772 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\menu.h
+	<iostream>
+	<iomanip>
+	"string"
+	"IOHelpers.H"
+	"BinarySearchTree.h"
+
+1559213585 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\iohelpers.h
+	"OperatorOverloads.H"
+	"monthTotalStruct.h"
+	<cmath>
+	<string>
+	<fstream>
+	<map>
+	<vector>
+	<algorithm>
+	"chrono"
+
+1559208540 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\operatoroverloads.h
+	<string>
+	<iostream>
+	<iomanip>
+	"DATE.H"
+	"TIME.H"
+	"WINDLOGTYPE.H"
+	"BinarySearchTree.h"
+	"monthTotalStruct.h"
+	<map>
+
+1559013015 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\time.h
+
+1559206979 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\windlogtype.h
+	"DATE.H"
+	"TIME.H"
+
+1559212113 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\binarysearchtree.h
+
+1559013015 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\time.cpp
+	"TIME.H"
+
+1559116474 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\assignment-two-master\monthtotalstruct.h
+	<string>
+
+1559116474 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\monthtotalstruct.h
+	<string>
 

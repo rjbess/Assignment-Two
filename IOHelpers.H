@@ -1,10 +1,11 @@
-//IOHelpers.h
+ //IOHelpers.h
 
 //---------------------------------------------------------------------------------
 #ifndef IOHelpers_H
 #define IOHelpers_H
 
 #include "OperatorOverloads.H"
+#include "monthTotalStruct.h"
 #include <cmath>
 #include <string>
 #include <fstream>
@@ -13,7 +14,7 @@
 #include <algorithm>
 #include "chrono"
 
-/**
+    /**
 	 * @Namespace IOHelpers
 	 * @brief A namespace which holds the methods use to help
 	 *         other methods in reading or viewing the data
@@ -27,6 +28,34 @@
 	 */
 namespace IOHelpers
 {
+    void CheckDateInMap(bool &inFound, std::string &inDate,std::map<std::string, WindLogType>const &M)
+    {
+        std::map<std::string, WindLogType>::const_iterator itr;
+
+        for(itr=M.begin();itr!=M.end();std::advance(itr, 100))
+        {
+            if(inDate==itr->first.substr(0, 6))
+            {
+                inFound=true;
+                break;
+            }
+        }
+    }
+    void CheckYearInMap(bool &inFound, std::string &inDate,std::map<std::string, WindLogType>const &M)
+    {
+        std::map<std::string, WindLogType>::const_iterator itr=M.begin();
+        std::map<std::string, WindLogType>::const_iterator itr2=--M.end();
+
+        if(inDate>=itr->first.substr(0, 4) &&inDate<=itr2->first.substr(0, 4))
+        {
+            inFound=true;
+        }
+    }
+    void ConvertMonth(std::string & monthString, unsigned & monthUnsigned)
+    {
+        std::string month[]={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        monthString=month[monthUnsigned-1];
+    }
     void ConvertDateToString(unsigned &inMonth, unsigned &inYear, std::string &inString)
     {
         inString=std::to_string(inYear);
@@ -45,144 +74,165 @@ namespace IOHelpers
 		 * @param inFloat- A speed value reference to convert
 		 * @return Void
 		 */
-    //void ConvertSpeed(float &inFloat)
-    //{
-      //  inFloat*=3.6;
-    //}
+    void ConvertSpeed(float &inFloat)
+    {
+        inFloat*=3.6;
+    }
     /**
 		 * @brief  Converts the input Solar Radiation from W/m^2 to kWh/m^2.
 		 *
 		 * @param inFloat- A radiation value reference to convert
 		 * @return Void
 		 */
-    //void ConvertRadiation(float &inFloat)
-    //{
-      //  inFloat*=0.00016666667;
-    //}
-    /**
-		 * @brief  Takes in a speed value reference and adds
-		 *         the windlog index speed it to itself.
-		 *
-		 * @param inFloat- A speed reference value
-		 * @param inFloat- A index reference value
-		 * @return Void
-		 */
-    /*void AddSpeed(float &elementIn, const BST<WindLogType> &W)
+    void ConvertRadiation(float &inFloat)
     {
-        elementIn+=W.node->data.s;
-    }*/
-    /**
-		 * @brief  Takes in a temp value reference and adds
-		 *         the windlog index temp it to itself.
-		 *
-		 * @param inFloat- A temp reference value
-		 * @param inFloat- A index reference value
-		 * @return Void
-		 */
-    /**
-		 * @brief  Takes in a radiation value reference and adds
-		 *         the windlog index radiation it to itself.
-		 *
-		 * @param inFloat- A radiation reference value
-		 * @param inFloat- A index reference value
-		 * @return Void
-		 */
-
-    /**
-		 * @brief  Takes in a float value reference and a
-		 *         count refence to find the average of the float.
-		 *
-		 * @param ElementIn- A float reference value
-		 * @param InSize- A int count reference value
-		 * @return Void
-		 */
-
-    /**
-		 * @brief  Takes in a Year value reference and boolean reference.
-		 *         Checks to see if year and between or equal to windlog
-		 * first and last indexes year. If so sets boolean to true.
-		 *
-		 * @param inYear- A unsigned year reference value
-		 * @param inFound- A boolean reference value
-		 * @return Void
-		 */
-    //void CheckYearInArrayHelper(unsigned& inYear, bool &inFound, const BST<WindLogType> &W)
-    //{
-      //  if(W->node)
-        //{
-          //  inFound=true;
-        //}
-    //}
-    //void CheckYearInArray(unsigned& inYear, bool &inFound, const BST<WindLogType> &W)
-    //{
-      //  W.InOrderTrav(CheckYearInArrayHelper(inYear, inFound, W));
-    //}
-    /**
-		 * @brief  Takes in a speed, count, month + year reference values and then loops
-		 *       around the windlog vector. When a windlog indexs month+ year match the
-		 * inputted values it uses the addspeed method and adds the count.
-		 *
-		 * @param inValue- A speed float reference value
-		 * @param inCount- A count int reference value
-		 * @param inMonth- A month unsigned reference value
-		 * @param inYear- A year unsigned reference value
-		 * @return Void
-		 */
-    void totalSpeedMonth(float &inValue, int &inCount, std::string &inDate, const BST<std::pair<std::string,std::string>> &B, const std::map<std::string, WindLogType> &M)
+        inFloat*=0.00016666667;
+    }
+    void GetAverage(float &inFloat, unsigned &inCount)
     {
-        std::map<std::string, WindLogType>::iterator itr;
+        inFloat/=inCount;
+    }
+
+    void displayMonthTotals(std::string &inDate,  BST<monthTotalStruct> &B, std::map<std::string, WindLogType>const &M)
+    {
+        bool found=false;
+
+        monthTotalStruct tempStruct;
         std::string tempString= " ";
-        std::pair <std::string, std::string> tempPair;
+        unsigned tempInt= stoul(inDate.substr(5,6));
+        ConvertMonth(tempString, tempInt);
+        tempStruct.key=inDate;
 
+        CheckDateInMap(found, inDate, M);
+
+        if(found==true)
+        {
+            tempStruct= B.Search(tempStruct);
+             std::cout<<std::setprecision(1)<<std::fixed<<tempString
+                 <<" "<<tempStruct.key.substr(0,4)<<": "<<tempStruct.totalAirTemp<< " degrees C, "<<tempStruct.totalSpeed<<" km/h"<<'\n';
+        }
+        else
+        {
+            std::cout<<tempString<<" "<<inDate.substr(0,4)<<": "<<"No Data"<<'\n';
+        }
 
     }
-        /**
-		 * @brief  Takes in a temp, count, month + year reference values and then loops
-		 *       around the windlog vector. When a windlog indexs month+ year match the
-		 * inputted values it uses the addtemp method and adds the count.
-		 *
-		 * @param inValue- A temp float reference value
-		 * @param inCount- A count int reference value
-		 * @param inMonth- A month unsigned reference value
-		 * @param inYear- A year unsigned reference value
-		 * @return Void
-		 */
-    //void totalTempMonth(float &inValue, int &inCount, unsigned &inMonth, unsigned &inYear,const std::map<int, WindLogType> &W)
-    //{
-      //  for(unsigned index=0; index<W.GetSize();index++)
-        //{
-          //  if(W[index].d.GetMonth()==inMonth && W[index].d.GetYear()==inYear)
-            //{
-              //  AddTemp(inValue, index, W);
-                //inCount++;
-            //}
-        //}
-    //}
-    /**
-		 * @brief  Takes in a radiation, count, month + year reference values and then loops
-		 *       around the windlog vector. When a windlog indexs month+ year match and solar
-		 * radiation is above 100W/m2 the inputted values it uses the addradiation method and adds the count.
-		 *
-		 * @param radiation- A temp float reference value
-		 * @param inCount- A count int reference value
-		 * @param inMonth- A month unsigned reference value
-		 * @param inYear- A year unsigned reference value
-		 * @return Void
-		 */
-    //void totalRadiationMonth(float &inValue, int &inCount, unsigned &inMonth, unsigned &inYear,const std::map<int, WindLogType> &W)
-    //{
-      //  for(unsigned index=0; index<W.GetSize();index++)
-        //{
-          //  if(W[index].d.GetMonth()==inMonth && W[index].d.GetYear()==inYear)
-            //{
-              //  if(W[index].solarRadiation>=100)
-                //{
-                  //  AddRadiation(inValue, index, W);
-                    //inCount++;
-                //}
-            //}
-        //}
-    //}
+    void DisplayYearTotals(std::string &inYear, BST<monthTotalStruct>&B, std::map<std::string, WindLogType>const&M)
+    {
+        std::string tempString=inYear;
+        std::string stringMonth=" ";
+        monthTotalStruct tempStruct;
+
+        for(unsigned i=1; i<13;i++)
+        {
+            bool found=false;
+
+            if(i<10)
+            {
+                tempString+="0"+std::to_string(i);
+            }
+            else
+            {
+                tempString+=std::to_string(i);
+            }
+            CheckDateInMap(found, tempString, M);
+            ConvertMonth(stringMonth, i);
+            tempStruct.key=tempString;
+
+            if(found==true)
+            {
+                tempStruct= B.Search(tempStruct);
+
+                std::cout<<std::setprecision(1)<<std::fixed<<stringMonth<<" "<< tempStruct.key.substr(0, 4)
+                         <<": "<<tempStruct.totalSpeed<<"km/h, "<<tempStruct.totalAirTemp<<" degrees C"<<'\n';
+            }
+            else
+            {
+                std::cout<<stringMonth<<" "<<tempStruct.key.substr(0,4)<<": "<<"No Data"<<'\n';
+            }
+            tempString=tempStruct.key.substr(0,4);
+        }
+    }
+    void DisplayYearTotalsRad(std::string &inYear, BST<monthTotalStruct>&B, std::map<std::string, WindLogType>const&M)
+    {
+        std::string tempString=inYear;
+        std::string stringMonth=" ";
+        monthTotalStruct tempStruct;
+
+        for(unsigned i=1; i<13;i++)
+        {
+            bool found=false;
+            if(i<10)
+            {
+                tempString+="0"+std::to_string(i);
+            }
+            else
+            {
+                tempString+=std::to_string(i);
+            }
+            CheckDateInMap(found, tempString, M);
+            ConvertMonth(stringMonth, i);
+            tempStruct.key=tempString;
+
+            if(found==true)
+            {
+                tempStruct= B.Search(tempStruct);
+
+                std::cout<<std::setprecision(1)<<std::fixed<<stringMonth<<" "<< tempStruct.key.substr(0, 4)<<": "
+                          <<tempStruct.totalSolarRadiation<<" kWh/m^2"<<'\n';
+            }
+            else
+            {
+                std::cout<<stringMonth<<" "<<tempStruct.key.substr(0,4)<<": "<<"No Data"<<'\n';
+            }
+            tempString=tempStruct.key.substr(0,4);
+        }
+    }
+    void writeAllValues(unsigned &inYear, BST<monthTotalStruct>&B, std::map<std::string, WindLogType>const&M, std::ofstream &out)
+    {
+        bool inMap=false;
+        std::string tempString=std::to_string(inYear);
+        CheckYearInMap(inMap, tempString, M);
+        if(inMap==false)
+        {
+            out<<inYear<<'\n'<<"No Data";
+        }
+        else
+        {
+            std::string stringMonth=" ";
+            monthTotalStruct tempStruct;
+            out<<inYear<<'\n';
+
+            for(unsigned i=1; i<13;i++)
+            {
+                bool found=false;
+                if(i<10)
+                {
+                    tempString+="0"+std::to_string(i);
+                }
+                else
+                {
+                    tempString+=std::to_string(i);
+                }
+                CheckDateInMap(found, tempString, M);
+                ConvertMonth(stringMonth, i);
+                tempStruct.key=tempString;
+
+                if(found==true)
+                {
+                    tempStruct= B.Search(tempStruct);
+
+                    out<<std::setprecision(1)<<std::fixed<<stringMonth<<","<<tempStruct.totalSpeed
+                       <<","<<tempStruct.totalAirTemp<<","<<tempStruct.totalSolarRadiation<<'\n';
+                }
+                else
+                {
+                    out<<stringMonth<<","<<"No Data"<<'\n';
+                }
+                tempString=tempStruct.key.substr(0,4);
+            }
+        }
+    }
     /**
 		 * @brief  Takes in a input value reference and checks the bounds
 		 *      of 1 and 5 and will loop until the user enters a valid input
@@ -194,9 +244,9 @@ namespace IOHelpers
    {
         std::cout<<"Enter: ";
         std::cin>>input;
-        while(input<1||input>5)
+        while(input<1||input>6)
         {
-            std::cout<<"Please enter a option number between 1 and 5: ";
+            std::cout<<"Please enter a option number between 1 and 6: ";
             std::cin>>input;
         }
     }
@@ -209,11 +259,6 @@ namespace IOHelpers
 		 * @param monthUnsigned- A month unsigned reference value
 		 * @return Void
 		 */
-    void ConvertMonth(std::string & monthString, unsigned & monthUnsigned)
-    {
-        std::string month[]={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-        monthString=month[monthUnsigned-1];
-    }
      void ReadFileMap(std::map<std::string, WindLogType> &W, std::string &fileName)
     {
         std::string inString;
@@ -226,41 +271,60 @@ namespace IOHelpers
             {
                 return;
             }
-
             newFile>>W;
             newFile.close();
             newFile.clear();
         }
         inFile.close();
     }
-    void StoreMapToTree(BST<std::pair<std::string, std::map<std::string, WindLogType>::iterator>> &inBST, std::map<std::string, WindLogType> &inMap)
+    void StoreMapToTree(BST<monthTotalStruct> &inBST, std::map<std::string, WindLogType> &inMap)
     {
-        std::vector<std::pair<std::string, std::map<std::string, WindLogType>::iterator>> shuffleVector;
+        std::vector<monthTotalStruct> shuffleVector;
         std::map<std::string, WindLogType>::iterator itr;
-        std::map<std::string, WindLogType>::iterator itr2;
-        std::string tempMonth=" ";
-        std::string tempString=" ";
-        std::pair<std::string, std::map<std::string, WindLogType>::iterator>tempPair;
+        std::string month1=" ";
+        std::string month2=" ";
+        unsigned countD=0;
+
+        monthTotalStruct tempMonthWindLog;
 
         for(itr=inMap.begin(); itr!=inMap.end(); ++itr)
         {
-            tempString=itr->first;
-            if(tempMonth.substr(0, 6)!=tempString.substr(0, 6))
+            month1=(*itr).first;
+            if((month1.substr(0,6)!=month2.substr(0,6) && month2!=" ")||itr==(--inMap.end()))
             {
-                tempMonth=tempString;
-                tempPair.first=tempMonth.substr(0,6);
-                tempPair.second=itr;
-                shuffleVector.push_back(tempPair);
+                tempMonthWindLog.key=month2.substr(0, 6);
+                GetAverage(tempMonthWindLog.totalSpeed, countD);
+                GetAverage(tempMonthWindLog.totalAirTemp, countD);
+                ConvertSpeed(tempMonthWindLog.totalSpeed);
+                ConvertRadiation(tempMonthWindLog.totalSolarRadiation);
+                shuffleVector.push_back(tempMonthWindLog);
+
+                countD=0;
+
+                tempMonthWindLog.totalAirTemp=0;
+                tempMonthWindLog.totalSolarRadiation=0;
+                tempMonthWindLog.totalSpeed=0;
+
+                month2=month1;
             }
-            tempMonth=tempString;
+            tempMonthWindLog.totalAirTemp+=(*itr).second.airTemp;
+
+            if(itr->second.solarRadiation>=100)
+            {
+                tempMonthWindLog.totalSolarRadiation+=(*itr).second.solarRadiation;
+            }
+            tempMonthWindLog.totalSpeed+=(*itr).second.speed;
+
+            countD++;
+            month2=month1;
         }
         unsigned seed= std::chrono::system_clock::now().time_since_epoch().count();
         std::shuffle(shuffleVector.begin(), shuffleVector.end(), std::default_random_engine(seed));
 
-        for(std::vector<std::pair<std::string, std::map<std::string, WindLogType>::iterator>>::iterator vItr=shuffleVector.begin(); vItr!=shuffleVector.end(); ++vItr)
+        for(std::vector<monthTotalStruct>::iterator vItr=shuffleVector.begin(); vItr!=shuffleVector.end(); ++vItr)
         {
-            tempPair=*vItr;
-            inBST.Insert(tempPair);
+            tempMonthWindLog=*vItr;
+            inBST.Insert(tempMonthWindLog);
         }
     }
 }

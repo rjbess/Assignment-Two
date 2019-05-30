@@ -10,7 +10,7 @@
 
 //---------------------------------------------------------------------------------
 
-/**
+    /**
 	 * @Struct WindLogType
 	 * @brief A struct which holds a date + time object
 	 *        as well as wind speed, air temp and solar radiation values as floats
