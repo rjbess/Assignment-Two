@@ -17,6 +17,7 @@ int main()
 
     menu::Menu(WindLogBST, WindLogDayBST);
 
+
     return 0;
 }
 

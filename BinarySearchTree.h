@@ -9,7 +9,6 @@
 template<typename T>
 using flTyp= void (*)( T &);
 
-
     /**
 	 * @class BST
 	 * @brief  Creates a binary search tree
@@ -24,6 +23,11 @@ using flTyp= void (*)( T &);
 	 * @author Robert Bessell
 	 * @version 01
 	 * @date 16/05/2019 Robert Bessell
+	 *
+	 * Added GetData method
+	 *
+	 * @version 02
+	 * @date 03/06/2019 Robert Bessell
 	 *
 	 * @todo Implement a balancing system
 	 * @todo Implement a input validation system
@@ -46,7 +50,7 @@ class BST
             /**
              * @brief  Destructor
              *
-             * Passes in the rootnode to the deletetree function
+             * Passes in the rootnode to the delete tree function
              * @return void
              */
         ~BST();
@@ -85,7 +89,7 @@ class BST
              * @param inData- T data value to be inserted.
              * @return void
              */
-        void Insert(const T inData);
+        void Insert(T& inData);
             /**
              * @brief  Calls the private remove method
              *
@@ -95,7 +99,7 @@ class BST
              * @param inData- T data value to be removed.
              * @return void
              */
-        void Remove(const T inData);
+        void Remove(T& inData);
             /**
              * @brief  Searches Tree for value, Prints out relevant message
              *
@@ -113,7 +117,7 @@ class BST
              *
              * Calls the private In Order traversal passing in the rootnode so it
              * prints all of the tree.
-             * @param
+             * @param fl- A function pointer
              * @return void
              */
         void InOrderTrav(flTyp<T> fl)const;
@@ -122,7 +126,7 @@ class BST
              *
              * Calls the private Pre Order traversal passing in the rootnode so it
              * prints all of the tree.
-             * @param
+             * @param fl- A function pointer
              * @return void
              */
         void PreOrderTrav(flTyp<T> fl)const;
@@ -131,11 +135,18 @@ class BST
              *
              * Calls the private Post Order traversal passing in the rootnode so it
              * prints all of the tree.
-             * @param
+             * @param fl- A function pointer
              * @return void
              */
         void PostOrderTrav(flTyp<T> fl)const;
-
+            /**
+             * @brief  Returns the T data
+             *
+             * Creates a temp node and inputs a wanted key calls the private search method.
+             * Returns the a copy of the data
+             * @param inData- A node value conatining the wanted data
+             * @return void
+             */
         T GetData(T &inData)const;
 
     private:
@@ -212,7 +223,7 @@ class BST
              * @param  inRootNode - Pointer to the root node, inNode - The newly created node struct.
              * @return void
              */
-        void Remove(node* &inRootNode, const T inData);
+        void Remove(node* &inRootNode, T& inData);
             /**
              * @brief  Searches the tree for the inputed value
              *
@@ -347,7 +358,7 @@ void BST<T>::DeleteTree(node *inNode)
     }
 }
 template <typename T>
-void BST<T>::Insert(const T inData)
+void BST<T>::Insert(T& inData)
 {
     node * tempNode= new node ;
     tempNode->data= inData;
@@ -387,12 +398,12 @@ void BST<T>::Insert(node  *inRootNode, node  *inNode)
     }
 }
 template <typename T>
-void BST<T>::Remove(const T inData)
+void BST<T>::Remove(T& inData)
 {
     Remove(rootNode, inData);
 }
 template <typename T>
-void BST<T>::Remove(node* &inRootNode, const T inData)
+void BST<T>::Remove(node* &inRootNode, T& inData)
 {
     node* tempPtr=nullptr;
     node* tempPtrTwo=nullptr;

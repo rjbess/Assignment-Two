@@ -27,17 +27,18 @@
 	 * @version 01
 	 * @date 17/04/2019
 	 *
+	 * @version 02
+	 * @date 3/6/2019
+	 *
 	 */
 
 
-namespace menu
-{
+namespace menu{
         /**
 		 * @brief  Displays the menus starting page.
 		 *
 		 * @return Void
 		 */
-
     void WelcomeMenu()
     {
         std::cout<<"---------------------------------------------------------\n\n"
@@ -49,7 +50,6 @@ namespace menu
 		 *
 		 * @return Void
 		 */
-
     void DisplayChoices()
     {
         std::cout<<"Enter (1) to view the average wind speed and average"
@@ -65,12 +65,12 @@ namespace menu
     }
         /**
 		 * @brief  Option One- Asks the user to enter a month and year.
-         *          Using IOhelpers it will modify the local variables
-         * and print out the months Average Wind Speed and Average Temp on screen.
+         *          It will pass these values and the inputted Binary Search
+         * Tree to IOHelper method to be calculated and printed.
 		 *
+		 * @param B- A const reference to A Binary Search Tree of monthTotalStructs
 		 * @return Void
 		 */
-
     void Option1(BST<monthTotalStruct>const &B)
     {
         std::string stringDate=" ";
@@ -86,14 +86,13 @@ namespace menu
         IOHelpers::displayMonthTotals(stringDate, B);
     }
         /**
-		 * @brief  Option 2- Asks the user for a year.
-         *         Will loop around for each month and
-         * using the IOHelpers will modify the local variables
-         * to print Average Wind Speed and Average Temp on screen.
+		 * @brief  Option Two- Asks the user to enter a  year.
+         *          It will pass this value and the  Binary Search
+         * Tree to IOHelper method to be calculated and printed.
 		 *
+		 * @param B- A const reference to A Binary Search Tree of monthTotalStructs
 		 * @return Void
 		 */
-
     void Option2(BST<monthTotalStruct>const &B)
     {
         std::string stringMonth=" ";
@@ -109,11 +108,11 @@ namespace menu
         IOHelpers::DisplayYearTotals(stringMonth, B);
     }
         /**
-		 * @brief  Option 3- Asks the user for a year.
-         *         Will loop around for each month and
-         * using the IOHelpers will modify the local variables
-         * to print Total Solar Radiation on screen.
+		 * @brief  Option Three- Asks the user to enter a  year.
+         *          It will pass this value and the  Binary Search
+         * Tree to IOHelper method to be calculated and printed.
 		 *
+		 * @param B- A const reference to A Binary Search Tree of monthTotalStructs
 		 * @return Void
 		 */
     void Option3(BST<monthTotalStruct>const &B)
@@ -134,12 +133,11 @@ namespace menu
 
     }
         /**
-		 * @brief  Option 4- Asks the user for a year.
-         *         Will loop around for each month and
-         * using the IOHelpers will modify the local variables
-         * to print Average Wind Speed, Average Temp and Total
-         * Solar Radiation to an csv file.
+		 * @brief  Option Four- Asks the user to enter a  year. Creates and outfile strea,
+         *          and  pass these values and the inputted Binary Search
+         * Tree to IOHelper method to be calculated and printed.
 		 *
+		 * @param B- A const reference to A Binary Search Tree of monthTotalStructs
 		 * @return Void
 		 */
     void Option4(BST<monthTotalStruct>const &B)
@@ -160,6 +158,14 @@ namespace menu
 
         outFile.close();
     }
+        /**
+		 * @brief  Option Five- Asks the user to enter a day, month and year.
+         *          Quickly converts the date and passes the date string BST
+         * into the IOHelper moethod to be calaculated and shown.
+		 *
+		 * @param B- A const reference to A Binary Search Tree of pair<string WindLogType>
+		 * @return Void
+		 */
     void Option5(BST<std::pair<std::string,WindLogType>>const &inBST)
     {
         std::string date="";
@@ -179,6 +185,9 @@ namespace menu
 		 *          Calls the other menu methods
 		 * and asks the user for an input to use the option method
 		 * until the user exits.
+		 *
+		 * @param B- Const reference to a monthTotalStruct BST
+		 * @param BWT- Const reference to a pair<string, Windlogtype> BST
 		 * @return Void
 		 */
     void Menu(BST<monthTotalStruct>const &B, BST<std::pair<std::string, WindLogType>>const&BWT)

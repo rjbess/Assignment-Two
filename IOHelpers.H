@@ -16,18 +16,31 @@
 
     /**
 	 * @Namespace IOHelpers
-	 * @brief A namespace which holds the methods use to help
-	 *         other methods in reading or viewing the data
-	 * for the windlog vector. Does not modify the vector in any
-	 * way, will either read off it and convert non member values
+	 * @brief A namespace which holds the read and calaculate
+	 * data off the Binary Trees and display them to the user.
+	 * Does not modify the data on the trees in anyway.
 	 *
 	 * @author Robert Bessell
 	 * @version 01
 	 * @date 17/04/2019
 	 *
+	 * @version 02
+	 * @date 03/06/2019
 	 */
 namespace IOHelpers
 {
+        /**
+		 * @brief  Helper method checks to see if year is valid
+		 *
+		 * Takes in a bool value, sate string and monthTotalBST.
+		 * Checks if the inputted dates year is in the tree.
+		 * Changes the bool value if found.
+		 *
+		 * @param inFound -Bool value of whether the year is in the tree
+		 * @param inDate- String value representing the year to be searched
+         * @param B- BST to be searched
+		 * @return Void
+		 */
     void CheckYearInTree(bool &inFound, std::string &inDate,BST<monthTotalStruct>const &B)
     {
         monthTotalStruct tempStruct;
@@ -42,11 +55,26 @@ namespace IOHelpers
             inFound= B.Search(tempStruct2);
         }
     }
+        /**
+		 * @brief  Converts a unsigned month to its string counterpart
+		 *
+		 * @param monthString- String month value
+		 * @param monthUnsigned- Unsigned month value
+		 * @return Void
+		 */
     void ConvertMonth(std::string & monthString, unsigned & monthUnsigned)
     {
         std::string month[]={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         monthString=month[monthUnsigned-1];
     }
+        /**
+		 * @brief  Converts a string to the correct key format
+		 *
+		 * @param inMonth -Int of the wanted month
+		 * @param inYear- Int of the wanted year
+         * @param inString- the string to be converted to the key value
+		 * @return Void
+		 */
     void ConvertDateToString(unsigned &inMonth, unsigned &inYear, std::string &inString)
     {
         inString=std::to_string(inYear);
@@ -59,7 +87,7 @@ namespace IOHelpers
             inString+=std::to_string(inMonth);
         }
     }
-    /**
+        /**
 		 * @brief  Converts the input speed from m/s to km/h.
 		 *
 		 * @param inFloat- A speed value reference to convert
@@ -69,7 +97,7 @@ namespace IOHelpers
     {
         inFloat*=3.6;
     }
-    /**
+        /**
 		 * @brief  Converts the input Solar Radiation from W/m^2 to kWh/m^2.
 		 *
 		 * @param inFloat- A radiation value reference to convert
@@ -79,21 +107,39 @@ namespace IOHelpers
     {
         inFloat*=0.00016666667;
     }
+        /**
+		 * @brief  Finds an average of a value and count
+		 *
+		 * @param inFloat- A float to be averaged
+		 * @param inCount- The count
+		 * @return Void
+		 */
     void GetAverage(float &inFloat, unsigned &inCount)
     {
         inFloat/=inCount;
     }
-
+        /**
+		 * @brief  Prints out a months Speed and Wind values.
+		 *
+		 * Takes in a key value and converts it to the proper form.
+		 * Searches the BST for the key and if valid will search the
+		 * BST for the data and print it out. If not will print out a No Data
+		 *
+		 * @param inDate- String representing the month and year
+		 * @param B- A monthTotalStruct BST
+		 * @return Void
+		 */
     void displayMonthTotals(std::string &inDate,  BST<monthTotalStruct>const &B)
     {
         bool found=false;
 
         monthTotalStruct tempStruct;
-        std::string tempString= " ";
-        unsigned tempInt= stoul(inDate.substr(5,6));
+        std::string tempString= inDate;
+
+        unsigned tempInt= stoul(tempString.substr(4,2));
+
         ConvertMonth(tempString, tempInt);
         tempStruct.key=inDate;
-
         found=B.Search(tempStruct);
 
         if(found==true)
@@ -108,6 +154,17 @@ namespace IOHelpers
         }
 
     }
+        /**
+		 * @brief  Prints out a years worth of Speed and Wind values.
+		 *
+		 * Takes in a key value and converts it to the proper form. For every month it
+		 * searches the BST for the key and if valid will search the
+		 * BST for the data and print it out. If not will print out a No Data
+		 *
+		 * @param inDate- String representing the year
+		 * @param B- A monthTotalStruct BST
+		 * @return Void
+		 */
     void DisplayYearTotals(std::string &inYear, BST<monthTotalStruct>const &B)
     {
         std::string tempString=inYear;
@@ -145,6 +202,17 @@ namespace IOHelpers
             tempString=tempStruct.key.substr(0,4);
         }
     }
+    /**
+		 * @brief  Prints out a years worth of Radiation values.
+		 *
+		 * Takes in a key value and converts it to the proper form. For every month it
+		 * searches the BST for the key and if valid will search the
+		 * BST for the data and print it out. If not will print out a No Data
+		 *
+		 * @param inDate- String representing the year
+		 * @param B- A monthTotalStruct BST
+		 * @return Void
+		 */
     void DisplayYearTotalsRad(std::string &inYear, BST<monthTotalStruct>const &B)
     {
         std::string tempString=inYear;
@@ -182,6 +250,18 @@ namespace IOHelpers
             tempString=tempStruct.key.substr(0,4);
         }
     }
+        /**
+		 * @brief  Writes out a years worth of Speed,Wind + Radiation values to a file.
+		 *
+		 * Takes in a year value, monthTotal BST and an outfile stream
+		 * Converts the year and checks to see if its in the BST. If not
+		 * writes out No Data. Else writes out the monthly values.
+		 *
+		 * @param inYear- Unsigned year value
+		 * @param B- A monthTotalStruct BST
+		 * @param Out- OUt file stream
+		 * @return Void
+		 */
     void writeAllValues(unsigned &inYear, BST<monthTotalStruct>const&B, std::ofstream &out)
     {
         bool inMap=false;
@@ -227,10 +307,29 @@ namespace IOHelpers
             }
         }
     }
+        /**
+		 * @brief  Helper method used by highestRadDay
+		 *
+		 * @param lhs- WindLogType struct
+		 * @param rhs- WindLogType struct
+		 * @return Void
+		 */
     bool radiationCompare(WindLogType &lhs, WindLogType &rhs)
     {
         return lhs.solarRadiation<rhs.solarRadiation;
     }
+        /**
+		 * @brief  Prints out the highest radiation value of a day
+		 *
+		 * Takes in a string date value and a pair<string, WindLogType> BST.
+		 * Creates a temp vector that holds every WindLog of a certaan day.
+		 * Finds the highest value and prints of it and any values that
+		 * have the same radiation value
+		 *
+		 * @param inDate- String value representing the day/month/year
+		 * @param inBST- pair<string, Windlog> BST holding all the Windlogs
+		 * @return Void
+		 */
     void GetHighestRadDay(std::string &inDate, BST<std::pair<std::string, WindLogType>>const &inBST)
     {
         std::vector<WindLogType>tempVector;
@@ -274,9 +373,9 @@ namespace IOHelpers
         }
     }
 
-    /**
+        /**
 		 * @brief  Takes in a input value reference and checks the bounds
-		 *      of 1 and 5 and will loop until the user enters a valid input
+		 *      of 1 and 6 and will loop until the user enters a valid input
 		 *
 		 * @param input- A input unsigned reference value
 		 * @return Void
@@ -291,13 +390,15 @@ namespace IOHelpers
             std::cin>>input;
         }
     }
-    /**
-		 * @brief  Takes in a string month reference and unsigned moth reference.
-		 *       Creates an array of months in string and uses the unsigned month
-		 * to set the corresponding string value.
+        /**
+		 * @brief  Takes in a map<string, WindLogType> and a in File to set
 		 *
-		 * @param monthString- A month string reference value
-		 * @param monthUnsigned- A month unsigned reference value
+		 * Takes in a map object and a file name. Opens a file stream and
+		 * reads everline which represents a file and sets its values to the map
+		 * object
+		 *
+		 * @param W- A map<string, WindLogType> refernce object
+		 * @param fileName-String file name of the file to be read
 		 * @return Void
 		 */
      void ReadFileMap(std::map<std::string, WindLogType> &W, std::string &fileName)
@@ -318,6 +419,17 @@ namespace IOHelpers
         }
         inFile.close();
     }
+        /**
+		 * @brief  Takes in a map<string, WindLogType> and sets it to a monthTotalStruct BST
+		 *
+		 * Reads every object in the map and for every month, totals the values and converts
+		 * them to be stored in a monthTotal Struct. It stores theses strcuts in a temp vector,
+		 * which is then shuffled and read into a BST.
+		 *
+		 * @param inMap- A map<string, WindLogType> reference object
+		 * @param inBST- BST object holding monthTotalStructs
+		 * @return Void
+		 */
     void StoreMapToMonthTree(BST<monthTotalStruct> &inBST, std::map<std::string, WindLogType> &inMap)
     {
         std::vector<monthTotalStruct> shuffleVector;
@@ -368,6 +480,18 @@ namespace IOHelpers
             inBST.Insert(tempMonthWindLog);
         }
     }
+        /**
+		 * @brief  Takes in a map<string, WindLogType> and sets it to a monthTotalStruct BST
+		 *
+		 * Reads every object in the map and for everyday changes the key value for the BST pair
+		 * to be the year, month, day and a unique counter value which resets every day, the WindlogType
+		 * values are read over as the second value.
+		 * These pairs are then sotred an a temp vector, shuffled and read into the pair<string, Windlog> BST
+		 *
+		 * @param inMap- A map<string, WindLogType> reference object
+		 * @param inBST- BST object holding pair<string, WindLogType>
+		 * @return Void
+		 */
     void StoreMapToDayTree(BST<std::pair<std::string, WindLogType>> &inBST, std::map<std::string, WindLogType> &inMap)
     {
         std::vector<std::pair<std::string, WindLogType>> shuffleVector;

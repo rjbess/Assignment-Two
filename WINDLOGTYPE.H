@@ -20,8 +20,6 @@
 	 * @date 07/04/2019
 	 *
 	 */
-
-
 typedef struct
 {
     Date d; /// Date attribute
