@@ -71,7 +71,7 @@ namespace menu
 		 * @return Void
 		 */
 
-    void Option1(BST<monthTotalStruct> &B)
+    void Option1(BST<monthTotalStruct>const &B)
     {
         std::string stringDate=" ";
         unsigned month=0;
@@ -94,7 +94,7 @@ namespace menu
 		 * @return Void
 		 */
 
-    void Option2(BST<monthTotalStruct> &B)
+    void Option2(BST<monthTotalStruct>const &B)
     {
         std::string stringMonth=" ";
         unsigned year=0;
@@ -116,7 +116,7 @@ namespace menu
 		 *
 		 * @return Void
 		 */
-    void Option3(BST<monthTotalStruct> &B)
+    void Option3(BST<monthTotalStruct>const &B)
     {
         std::string stringMonth=" ";
         unsigned year=0;
@@ -142,7 +142,7 @@ namespace menu
 		 *
 		 * @return Void
 		 */
-    void Option4(BST<monthTotalStruct> &B)
+    void Option4(BST<monthTotalStruct>const &B)
     {
         unsigned year=0;
 
@@ -160,7 +160,7 @@ namespace menu
 
         outFile.close();
     }
-    void Option5(BST<std::pair<std::string,WindLogType>>&inBST)
+    void Option5(BST<std::pair<std::string,WindLogType>>const &inBST)
     {
         std::string date="";
 
@@ -181,7 +181,7 @@ namespace menu
 		 * until the user exits.
 		 * @return Void
 		 */
-    void Menu(BST<monthTotalStruct> &B, BST<std::pair<std::string, WindLogType>>&BWT)
+    void Menu(BST<monthTotalStruct>const &B, BST<std::pair<std::string, WindLogType>>const&BWT)
     {
         unsigned input;
         WelcomeMenu();

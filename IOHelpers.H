@@ -28,8 +28,19 @@
 	 */
 namespace IOHelpers
 {
-    void CheckYearInTree(bool &inFound, std::string &inDate,BST<monthTotalStruct>&B)
+    void CheckYearInTree(bool &inFound, std::string &inDate,BST<monthTotalStruct>const &B)
     {
+        monthTotalStruct tempStruct;
+        monthTotalStruct tempStruct2;
+
+        tempStruct.key=inDate.substr(0,4)+"01";
+        tempStruct2.key=inDate.substr(0,4)+"12";
+
+        inFound=B.Search(tempStruct);
+        if(inFound==false)
+        {
+            inFound= B.Search(tempStruct2);
+        }
     }
     void ConvertMonth(std::string & monthString, unsigned & monthUnsigned)
     {
@@ -73,7 +84,7 @@ namespace IOHelpers
         inFloat/=inCount;
     }
 
-    void displayMonthTotals(std::string &inDate,  BST<monthTotalStruct> &B)
+    void displayMonthTotals(std::string &inDate,  BST<monthTotalStruct>const &B)
     {
         bool found=false;
 
@@ -97,7 +108,7 @@ namespace IOHelpers
         }
 
     }
-    void DisplayYearTotals(std::string &inYear, BST<monthTotalStruct>&B)
+    void DisplayYearTotals(std::string &inYear, BST<monthTotalStruct>const &B)
     {
         std::string tempString=inYear;
         std::string stringMonth=" ";
@@ -134,7 +145,7 @@ namespace IOHelpers
             tempString=tempStruct.key.substr(0,4);
         }
     }
-    void DisplayYearTotalsRad(std::string &inYear, BST<monthTotalStruct>&B)
+    void DisplayYearTotalsRad(std::string &inYear, BST<monthTotalStruct>const &B)
     {
         std::string tempString=inYear;
         std::string stringMonth=" ";
@@ -171,7 +182,7 @@ namespace IOHelpers
             tempString=tempStruct.key.substr(0,4);
         }
     }
-    void writeAllValues(unsigned &inYear, BST<monthTotalStruct>&B, std::ofstream &out)
+    void writeAllValues(unsigned &inYear, BST<monthTotalStruct>const&B, std::ofstream &out)
     {
         bool inMap=false;
         std::string tempString=std::to_string(inYear);
@@ -220,7 +231,7 @@ namespace IOHelpers
     {
         return lhs.solarRadiation<rhs.solarRadiation;
     }
-    void GetHighestRadDay(std::string &inDate, BST<std::pair<std::string, WindLogType>>&inBST)
+    void GetHighestRadDay(std::string &inDate, BST<std::pair<std::string, WindLogType>>const &inBST)
     {
         std::vector<WindLogType>tempVector;
         std::string tempString="";

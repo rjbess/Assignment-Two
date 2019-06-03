@@ -1,5 +1,5 @@
 #include "Menu.H"
-//#include "WINDLOGTYPE.H"
+#include "WINDLOGTYPE.H"
 #include <map>
 #include "BinarySearchTree.h"
 

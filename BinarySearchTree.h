@@ -35,6 +35,109 @@ using flTyp= void (*)( T &);
 template <class T>
 class BST
 {
+    public:
+            /**
+             * @brief  Constructor
+             *
+             * Sets rootNode to nullptr.
+             * @return void
+             */
+        BST();
+            /**
+             * @brief  Destructor
+             *
+             * Passes in the rootnode to the deletetree function
+             * @return void
+             */
+        ~BST();
+            /**
+             * @brief  Copy Constructor
+             *
+             * Passed in the reference to the old tree. It sets the new trees
+             * rootNode to nullptr, it then sets root to a copy of the old tree
+             * by passing the old trees rootNode into the CopyTree function.
+             *
+             * @param oldTree- Constant reference to the tree wanting to be copied.
+             * @return void
+             */
+        BST(const BST<T> &oldTree);
+            /**
+             * @brief  Overloaded = Operator
+             *
+             * Firstly deletes the contents of the Left hand side tree by
+             * passing its rootNode to the DeleteTree function.
+             * Then passings in the oldTrees rootNode into the CopyTree
+             * method and sets the rootNode of the left hand side to the
+             * the right hand side. It the returns the dereferenced pointer
+             *
+             * @param oldTree- Constant reference to the tree wanting to be copied.
+             * @return *this
+             */
+        BST<T>&operator =(const BST<T>&);
+            /**
+             * @brief  Creates a new node and passes it to be inserted in the tree
+             *
+             * Creates a new node on the heap. Sets the data value equal to the inputed value
+             * and pointers to nullptr. Checks to see in rootptr equals nulltpr ie empty.
+             * If so sets the new node to it else passes the rootptr and new node to the private
+             * insert method.
+             *
+             * @param inData- T data value to be inserted.
+             * @return void
+             */
+        void Insert(const T inData);
+            /**
+             * @brief  Calls the private remove method
+             *
+             * Takes in the data to be removed. Then passes then rootnode
+             * and data to the private remove method.
+             *
+             * @param inData- T data value to be removed.
+             * @return void
+             */
+        void Remove(const T inData);
+            /**
+             * @brief  Searches Tree for value, Prints out relevant message
+             *
+             * Creates a temp node pointer equal to nullptr. Then calles the private Search function
+             * passing in the rootnode and wanted data. That will either return the position of the node
+             * or nulltptr depending on whether the data is in the tree, temp node is set to that return.
+             * If node wasnt found prints out 'Input not found' else prints out the position of the node
+             *
+             * @param inData- T data value to be searched.
+             * @return void
+             */
+        bool Search(T inData)const;
+            /**
+             * @brief  Calls the private In Order Traversal method
+             *
+             * Calls the private In Order traversal passing in the rootnode so it
+             * prints all of the tree.
+             * @param
+             * @return void
+             */
+        void InOrderTrav(flTyp<T> fl)const;
+            /**
+             * @brief  Calls the private Pre Order Traversal method
+             *
+             * Calls the private Pre Order traversal passing in the rootnode so it
+             * prints all of the tree.
+             * @param
+             * @return void
+             */
+        void PreOrderTrav(flTyp<T> fl)const;
+            /**
+             * @brief  Calls the private Post Order Traversal method
+             *
+             * Calls the private Post Order traversal passing in the rootnode so it
+             * prints all of the tree.
+             * @param
+             * @return void
+             */
+        void PostOrderTrav(flTyp<T> fl)const;
+
+        T GetData(T &inData)const;
+
     private:
             /// Defines a single node used in the tree
         struct node
@@ -188,109 +291,6 @@ class BST
              */
 
         void SetCopyParentPtr(node* inNode);
-
-    public:
-            /**
-             * @brief  Constructor
-             *
-             * Sets rootNode to nullptr.
-             * @return void
-             */
-        BST();
-            /**
-             * @brief  Destructor
-             *
-             * Passes in the rootnode to the deletetree function
-             * @return void
-             */
-        ~BST();
-            /**
-             * @brief  Copy Constructor
-             *
-             * Passed in the reference to the old tree. It sets the new trees
-             * rootNode to nullptr, it then sets root to a copy of the old tree
-             * by passing the old trees rootNode into the CopyTree function.
-             *
-             * @param oldTree- Constant reference to the tree wanting to be copied.
-             * @return void
-             */
-        BST(const BST<T> &oldTree);
-            /**
-             * @brief  Overloaded = Operator
-             *
-             * Firstly deletes the contents of the Left hand side tree by
-             * passing its rootNode to the DeleteTree function.
-             * Then passings in the oldTrees rootNode into the CopyTree
-             * method and sets the rootNode of the left hand side to the
-             * the right hand side. It the returns the dereferenced pointer
-             *
-             * @param oldTree- Constant reference to the tree wanting to be copied.
-             * @return *this
-             */
-        BST<T>&operator =(const BST<T>&);
-            /**
-             * @brief  Creates a new node and passes it to be inserted in the tree
-             *
-             * Creates a new node on the heap. Sets the data value equal to the inputed value
-             * and pointers to nullptr. Checks to see in rootptr equals nulltpr ie empty.
-             * If so sets the new node to it else passes the rootptr and new node to the private
-             * insert method.
-             *
-             * @param inData- T data value to be inserted.
-             * @return void
-             */
-        void Insert(const T inData);
-            /**
-             * @brief  Calls the private remove method
-             *
-             * Takes in the data to be removed. Then passes then rootnode
-             * and data to the private remove method.
-             *
-             * @param inData- T data value to be removed.
-             * @return void
-             */
-        void Remove(const T inData);
-            /**
-             * @brief  Searches Tree for value, Prints out relevant message
-             *
-             * Creates a temp node pointer equal to nullptr. Then calles the private Search function
-             * passing in the rootnode and wanted data. That will either return the position of the node
-             * or nulltptr depending on whether the data is in the tree, temp node is set to that return.
-             * If node wasnt found prints out 'Input not found' else prints out the position of the node
-             *
-             * @param inData- T data value to be searched.
-             * @return void
-             */
-        bool Search(T inData);
-            /**
-             * @brief  Calls the private In Order Traversal method
-             *
-             * Calls the private In Order traversal passing in the rootnode so it
-             * prints all of the tree.
-             * @param
-             * @return void
-             */
-        void InOrderTrav(flTyp<T> fl)const;
-            /**
-             * @brief  Calls the private Pre Order Traversal method
-             *
-             * Calls the private Pre Order traversal passing in the rootnode so it
-             * prints all of the tree.
-             * @param
-             * @return void
-             */
-        void PreOrderTrav(flTyp<T> fl)const;
-            /**
-             * @brief  Calls the private Post Order Traversal method
-             *
-             * Calls the private Post Order traversal passing in the rootnode so it
-             * prints all of the tree.
-             * @param
-             * @return void
-             */
-        void PostOrderTrav(flTyp<T> fl)const;
-
-        T GetData(T &inData)const;
 };
 template <typename T>
 BST<T>::BST()
@@ -473,7 +473,7 @@ void BST<T>::Remove(node* &inRootNode, const T inData)
     }
 }
 template <typename T>
-bool BST<T>::Search(const T inData)
+bool BST<T>::Search(const T inData)const
 {
     node* tempNode=nullptr;
     tempNode= Search(rootNode, inData);
