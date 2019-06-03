@@ -28,28 +28,8 @@
 	 */
 namespace IOHelpers
 {
-    void CheckDateInMap(bool &inFound, std::string &inDate,std::map<std::string, WindLogType>const &M)
+    void CheckYearInTree(bool &inFound, std::string &inDate,BST<monthTotalStruct>&B)
     {
-        std::map<std::string, WindLogType>::const_iterator itr;
-
-        for(itr=M.begin();itr!=M.end();std::advance(itr, 100))
-        {
-            if(inDate==itr->first.substr(0, 6))
-            {
-                inFound=true;
-                break;
-            }
-        }
-    }
-    void CheckYearInMap(bool &inFound, std::string &inDate,std::map<std::string, WindLogType>const &M)
-    {
-        std::map<std::string, WindLogType>::const_iterator itr=M.begin();
-        std::map<std::string, WindLogType>::const_iterator itr2=--M.end();
-
-        if(inDate>=itr->first.substr(0, 4) &&inDate<=itr2->first.substr(0, 4))
-        {
-            inFound=true;
-        }
     }
     void ConvertMonth(std::string & monthString, unsigned & monthUnsigned)
     {
@@ -93,7 +73,7 @@ namespace IOHelpers
         inFloat/=inCount;
     }
 
-    void displayMonthTotals(std::string &inDate,  BST<monthTotalStruct> &B, std::map<std::string, WindLogType>const &M)
+    void displayMonthTotals(std::string &inDate,  BST<monthTotalStruct> &B)
     {
         bool found=false;
 
@@ -103,11 +83,11 @@ namespace IOHelpers
         ConvertMonth(tempString, tempInt);
         tempStruct.key=inDate;
 
-        CheckDateInMap(found, inDate, M);
+        found=B.Search(tempStruct);
 
         if(found==true)
         {
-            tempStruct= B.Search(tempStruct);
+            tempStruct= B.GetData(tempStruct);
              std::cout<<std::setprecision(1)<<std::fixed<<tempString
                  <<" "<<tempStruct.key.substr(0,4)<<": "<<tempStruct.totalAirTemp<< " degrees C, "<<tempStruct.totalSpeed<<" km/h"<<'\n';
         }
@@ -117,7 +97,7 @@ namespace IOHelpers
         }
 
     }
-    void DisplayYearTotals(std::string &inYear, BST<monthTotalStruct>&B, std::map<std::string, WindLogType>const&M)
+    void DisplayYearTotals(std::string &inYear, BST<monthTotalStruct>&B)
     {
         std::string tempString=inYear;
         std::string stringMonth=" ";
@@ -135,13 +115,14 @@ namespace IOHelpers
             {
                 tempString+=std::to_string(i);
             }
-            CheckDateInMap(found, tempString, M);
+
             ConvertMonth(stringMonth, i);
             tempStruct.key=tempString;
 
+            found=B.Search(tempStruct);
             if(found==true)
             {
-                tempStruct= B.Search(tempStruct);
+                tempStruct= B.GetData(tempStruct);
 
                 std::cout<<std::setprecision(1)<<std::fixed<<stringMonth<<" "<< tempStruct.key.substr(0, 4)
                          <<": "<<tempStruct.totalSpeed<<"km/h, "<<tempStruct.totalAirTemp<<" degrees C"<<'\n';
@@ -153,7 +134,7 @@ namespace IOHelpers
             tempString=tempStruct.key.substr(0,4);
         }
     }
-    void DisplayYearTotalsRad(std::string &inYear, BST<monthTotalStruct>&B, std::map<std::string, WindLogType>const&M)
+    void DisplayYearTotalsRad(std::string &inYear, BST<monthTotalStruct>&B)
     {
         std::string tempString=inYear;
         std::string stringMonth=" ";
@@ -170,13 +151,15 @@ namespace IOHelpers
             {
                 tempString+=std::to_string(i);
             }
-            CheckDateInMap(found, tempString, M);
+
             ConvertMonth(stringMonth, i);
             tempStruct.key=tempString;
 
+            found=B.Search(tempStruct);
+
             if(found==true)
             {
-                tempStruct= B.Search(tempStruct);
+                tempStruct= B.GetData(tempStruct);
 
                 std::cout<<std::setprecision(1)<<std::fixed<<stringMonth<<" "<< tempStruct.key.substr(0, 4)<<": "
                           <<tempStruct.totalSolarRadiation<<" kWh/m^2"<<'\n';
@@ -188,11 +171,11 @@ namespace IOHelpers
             tempString=tempStruct.key.substr(0,4);
         }
     }
-    void writeAllValues(unsigned &inYear, BST<monthTotalStruct>&B, std::map<std::string, WindLogType>const&M, std::ofstream &out)
+    void writeAllValues(unsigned &inYear, BST<monthTotalStruct>&B, std::ofstream &out)
     {
         bool inMap=false;
         std::string tempString=std::to_string(inYear);
-        CheckYearInMap(inMap, tempString, M);
+        CheckYearInTree(inMap, tempString, B);
         if(inMap==false)
         {
             out<<inYear<<'\n'<<"No Data";
@@ -214,13 +197,13 @@ namespace IOHelpers
                 {
                     tempString+=std::to_string(i);
                 }
-                CheckDateInMap(found, tempString, M);
+
                 ConvertMonth(stringMonth, i);
                 tempStruct.key=tempString;
-
+                found=B.Search(tempStruct);
                 if(found==true)
                 {
-                    tempStruct= B.Search(tempStruct);
+                    tempStruct= B.GetData(tempStruct);
 
                     out<<std::setprecision(1)<<std::fixed<<stringMonth<<","<<tempStruct.totalSpeed
                        <<","<<tempStruct.totalAirTemp<<","<<tempStruct.totalSolarRadiation<<'\n';
@@ -233,6 +216,53 @@ namespace IOHelpers
             }
         }
     }
+    bool radiationCompare(WindLogType &lhs, WindLogType &rhs)
+    {
+        return lhs.solarRadiation<rhs.solarRadiation;
+    }
+    void GetHighestRadDay(std::string &inDate, BST<std::pair<std::string, WindLogType>>&inBST)
+    {
+        std::vector<WindLogType>tempVector;
+        std::string tempString="";
+
+        bool found= false;
+        std::pair<std::string, WindLogType>tempPair;
+
+        for(unsigned index=1; index<150;index++)
+        {
+            tempString=inDate;
+            tempString+=std::to_string(index);
+            tempPair.first=tempString;
+            found= inBST.Search(tempPair);
+            if(found==true)
+            {
+                tempPair=inBST.GetData(tempPair);
+                tempVector.push_back(tempPair.second);
+            }
+        }
+        if(tempVector.empty())
+        {
+            std::cout<<"Day not found"<<'\n';
+        }
+        else
+        {
+            std::vector<WindLogType>::iterator itr;
+
+            itr= std::max_element(tempVector.begin(), tempVector.end(), radiationCompare);
+            std::cout<<"Date: "<<(*itr).d<<'\n';
+            std::cout<<"Highest Solar Radiation for the day: "<<(*itr).solarRadiation<<" w/m^2"<<'\n';
+            std::cout<<"Time"<<'\n';
+            std::cout<<(*itr).t<<'\n';
+            for(std::vector<WindLogType>::iterator itr2=tempVector.begin(); itr2!=tempVector.end(); ++itr2)
+            {
+                if((*itr2).solarRadiation==(*itr).solarRadiation && itr2!=itr)
+                {
+                    std::cout<<(*itr2).t<<'\n';
+                }
+            }
+        }
+    }
+
     /**
 		 * @brief  Takes in a input value reference and checks the bounds
 		 *      of 1 and 5 and will loop until the user enters a valid input
@@ -277,7 +307,7 @@ namespace IOHelpers
         }
         inFile.close();
     }
-    void StoreMapToTree(BST<monthTotalStruct> &inBST, std::map<std::string, WindLogType> &inMap)
+    void StoreMapToMonthTree(BST<monthTotalStruct> &inBST, std::map<std::string, WindLogType> &inMap)
     {
         std::vector<monthTotalStruct> shuffleVector;
         std::map<std::string, WindLogType>::iterator itr;
@@ -325,6 +355,38 @@ namespace IOHelpers
         {
             tempMonthWindLog=*vItr;
             inBST.Insert(tempMonthWindLog);
+        }
+    }
+    void StoreMapToDayTree(BST<std::pair<std::string, WindLogType>> &inBST, std::map<std::string, WindLogType> &inMap)
+    {
+        std::vector<std::pair<std::string, WindLogType>> shuffleVector;
+        std::map<std::string, WindLogType>::iterator itr;
+
+        std::pair<std::string, WindLogType> tempPair;
+
+        unsigned countD=1;
+
+        for(itr=inMap.begin(); itr!=inMap.end(); ++itr)
+        {
+            if((*itr).first.substr(0, 8)==tempPair.first.substr(0,8))
+            {
+                tempPair.first=(*itr).first.substr(0, 8)+std::to_string(countD);
+                countD++;
+            }
+            else
+            {
+                countD=1;
+                tempPair.first=(*itr).first.substr(0, 8)+std::to_string(countD);
+            }
+            tempPair.second=(*itr).second;
+            shuffleVector.push_back(tempPair);
+        }
+        unsigned seed= std::chrono::system_clock::now().time_since_epoch().count();
+        std::shuffle(shuffleVector.begin(), shuffleVector.end(), std::default_random_engine(seed));
+
+         for(std::vector<std::pair<std::string,WindLogType>>::iterator vItr=shuffleVector.begin(); vItr!=shuffleVector.end(); ++vItr)
+        {
+            inBST.Insert(*vItr);
         }
     }
 }

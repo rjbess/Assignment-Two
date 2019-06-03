@@ -4,20 +4,20 @@
 
 1559013015 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\date.h
 
-1559212061 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\main.cpp
+1559526460 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\main.cpp
 	"Menu.H"
 	"WINDLOGTYPE.H"
 	<map>
 	"BinarySearchTree.h"
 
-1559208772 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\menu.h
+1559522703 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\menu.h
 	<iostream>
 	<iomanip>
 	"string"
 	"IOHelpers.H"
 	"BinarySearchTree.h"
 
-1559213585 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\iohelpers.h
+1559534767 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\iohelpers.h
 	"OperatorOverloads.H"
 	"monthTotalStruct.h"
 	<cmath>
@@ -28,7 +28,7 @@
 	<algorithm>
 	"chrono"
 
-1559208540 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\operatoroverloads.h
+1559527232 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\operatoroverloads.h
 	<string>
 	<iostream>
 	<iomanip>
@@ -45,7 +45,7 @@
 	"DATE.H"
 	"TIME.H"
 
-1559212113 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\binarysearchtree.h
+1559509652 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\binarysearchtree.h
 
 1559013015 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\time.cpp
 	"TIME.H"
@@ -106,4 +106,9 @@
 
 1559116474 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\monthtotalstruct.h
 	<string>
+
+1559518666 source:c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\src\daystruct.cpp
+	"dayStruct.h"
+
+1559518666 c:\users\rjbess\desktop\uni\murdoch\2-ict283 data structure\assignment 2\code\include\daystruct.h
 

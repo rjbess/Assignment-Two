@@ -71,7 +71,7 @@ namespace menu
 		 * @return Void
 		 */
 
-    void Option1(BST<monthTotalStruct> &B, std::map<std::string, WindLogType>const &M)
+    void Option1(BST<monthTotalStruct> &B)
     {
         std::string stringDate=" ";
         unsigned month=0;
@@ -83,7 +83,7 @@ namespace menu
 
         IOHelpers::ConvertDateToString(month, year, stringDate);
 
-        IOHelpers::displayMonthTotals(stringDate, B, M);
+        IOHelpers::displayMonthTotals(stringDate, B);
     }
         /**
 		 * @brief  Option 2- Asks the user for a year.
@@ -94,7 +94,7 @@ namespace menu
 		 * @return Void
 		 */
 
-    void Option2(BST<monthTotalStruct> &B, std::map<std::string, WindLogType>const&M)
+    void Option2(BST<monthTotalStruct> &B)
     {
         std::string stringMonth=" ";
         unsigned year=0;
@@ -106,7 +106,7 @@ namespace menu
         std::cout<<"Year: "<<year<<'\n';
 
         stringMonth= std::to_string(year);
-        IOHelpers::DisplayYearTotals(stringMonth, B, M);
+        IOHelpers::DisplayYearTotals(stringMonth, B);
     }
         /**
 		 * @brief  Option 3- Asks the user for a year.
@@ -116,7 +116,7 @@ namespace menu
 		 *
 		 * @return Void
 		 */
-    void Option3(BST<monthTotalStruct> &B, std::map<std::string, WindLogType>const&M)
+    void Option3(BST<monthTotalStruct> &B)
     {
         std::string stringMonth=" ";
         unsigned year=0;
@@ -130,7 +130,7 @@ namespace menu
 
         std::cout<<"Year: "<<year<<'\n';
 
-        IOHelpers::DisplayYearTotalsRad(stringMonth, B, M);
+        IOHelpers::DisplayYearTotalsRad(stringMonth, B);
 
     }
         /**
@@ -142,7 +142,7 @@ namespace menu
 		 *
 		 * @return Void
 		 */
-    void Option4(BST<monthTotalStruct> &B, std::map<std::string, WindLogType>const&M)
+    void Option4(BST<monthTotalStruct> &B)
     {
         unsigned year=0;
 
@@ -156,14 +156,13 @@ namespace menu
             return;
         }
 
-        IOHelpers::writeAllValues(year, B, M, outFile);
+        IOHelpers::writeAllValues(year, B, outFile);
 
         outFile.close();
     }
-    /*void Option5(std::map<std::string, WindLogType>const &M)
+    void Option5(BST<std::pair<std::string,WindLogType>>&inBST)
     {
         std::string date="";
-        std::string tempString="";
 
         std::cout<<"To view the highest solar radiation of a day"
                  <<". Enter the date in the format of '01/02/2019': ";
@@ -171,11 +170,10 @@ namespace menu
 
         date.erase(date.begin()+2);
         date.erase(date.begin()+4);
+        date=date.substr(4,4)+date.substr(2,2)+date.substr(0,2);
 
-        date=date.substr(4,7)+date.substr(2,3)+date.substr(0,1);
-
-        std::cout<<date;
-    }*/
+        IOHelpers::GetHighestRadDay(date, inBST);
+    }
         /**
 		 * @brief  Menu- The 'main' menu method.
 		 *          Calls the other menu methods
@@ -183,7 +181,7 @@ namespace menu
 		 * until the user exits.
 		 * @return Void
 		 */
-    void Menu(BST<monthTotalStruct> &B, std::map<std::string, WindLogType>const &M)
+    void Menu(BST<monthTotalStruct> &B, BST<std::pair<std::string, WindLogType>>&BWT)
     {
         unsigned input;
         WelcomeMenu();
@@ -193,16 +191,16 @@ namespace menu
         {
             switch(input)
             {
-                case 1 : Option1(B, M);
+                case 1 : Option1(B);
                         break;
-                case 2 : Option2(B, M);
+                case 2 : Option2(B);
                         break;
-                case 3 : Option3(B, M);
+                case 3 : Option3(B);
                         break;
-                case 4 : Option4(B,M);
+                case 4 : Option4(B);
                         break;
-                //case 5 : Option5(M);
-                        //break;
+                case 5 : Option5(BWT);
+                        break;
             }
             WelcomeMenu();
             DisplayChoices();

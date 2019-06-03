@@ -261,7 +261,7 @@ class BST
              * @param inData- T data value to be searched.
              * @return void
              */
-        T Search(T inData);
+        bool Search(T inData);
             /**
              * @brief  Calls the private In Order Traversal method
              *
@@ -289,6 +289,8 @@ class BST
              * @return void
              */
         void PostOrderTrav(flTyp<T> fl)const;
+
+        T GetData(T &inData)const;
 };
 template <typename T>
 BST<T>::BST()
@@ -471,9 +473,24 @@ void BST<T>::Remove(node* &inRootNode, const T inData)
     }
 }
 template <typename T>
-T BST<T>::Search(const T inData)
+bool BST<T>::Search(const T inData)
 {
     node* tempNode=nullptr;
+    tempNode= Search(rootNode, inData);
+    if (tempNode==nullptr)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+template <typename T>
+T BST<T>::GetData(T &inData)const
+{
+    node* tempNode=nullptr;
+
     tempNode= Search(rootNode, inData);
 
     return tempNode->data;

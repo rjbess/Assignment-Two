@@ -185,4 +185,135 @@ bool operator==( monthTotalStruct &lhs, monthTotalStruct &rhs)
         return false;
     }
 }
+bool operator<(const WindLogType& lhs, const WindLogType& rhs)
+{
+    if(lhs.d.GetYear()<rhs.d.GetYear())
+    {
+        return true;
+    }
+    else if(lhs.d.GetYear()>rhs.d.GetYear())
+    {
+        return false;
+    }
+    else if(lhs.d.GetMonth()<rhs.d.GetMonth())
+    {
+        return true;
+    }
+    else if(lhs.d.GetMonth()>rhs.d.GetMonth())
+    {
+        return false;
+    }
+    else if(lhs.d.GetDay()<rhs.d.GetDay())
+    {
+        return true;
+    }
+    else if(lhs.d.GetDay()>rhs.d.GetDay())
+    {
+        return false;
+    }
+    else if(lhs.t.GetHours()<rhs.t.GetHours())
+    {
+        return true;
+    }
+    else if(lhs.t.GetHours()>rhs.t.GetHours())
+    {
+        return false;
+    }
+    else if(lhs.t.GetMinutes()<rhs.t.GetMinutes())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool operator>(const WindLogType& lhs, const WindLogType& rhs)
+{
+   if(lhs.d.GetYear()>rhs.d.GetYear())
+    {
+        return true;
+    }
+    else if(lhs.d.GetYear()<rhs.d.GetYear())
+    {
+        return false;
+    }
+    else if(lhs.d.GetMonth()>rhs.d.GetMonth())
+    {
+        return true;
+    }
+    else if(lhs.d.GetMonth()<rhs.d.GetMonth())
+    {
+        return false;
+    }
+    else if(lhs.d.GetDay()>rhs.d.GetDay())
+    {
+        return true;
+    }
+    else if(lhs.d.GetDay()<rhs.d.GetDay())
+    {
+        return false;
+    }
+    else if(lhs.t.GetHours()>rhs.t.GetHours())
+    {
+        return true;
+    }
+    else if(lhs.t.GetHours()<rhs.t.GetHours())
+    {
+        return false;
+    }
+    else if(lhs.t.GetMinutes()>rhs.t.GetMinutes())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool operator==( WindLogType &lhs, WindLogType &rhs)
+{
+    if(lhs.d.GetYear()==rhs.d.GetYear() &&lhs.d.GetMonth()==rhs.d.GetMonth()&&lhs.d.GetDay()==rhs.d.GetDay()
+       && lhs.t.GetHours()==rhs.t.GetHours()&&lhs.t.GetMinutes()==rhs.t.GetMinutes())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool operator <(std::pair<std::string, WindLogType>&lhs, std::pair<std::string, WindLogType>&rhs)
+{
+    if(lhs.first<rhs.first)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool operator >(std::pair<std::string, WindLogType>&lhs, std::pair<std::string, WindLogType>&rhs)
+{
+    if(lhs.first>rhs.first)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool operator ==(std::pair<std::string, WindLogType>&lhs, std::pair<std::string, WindLogType>&rhs)
+{
+    if(lhs.first==rhs.first)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 #endif
